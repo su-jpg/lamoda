@@ -80,3 +80,12 @@ cartOverlay.addEventListener("click", (event) => {
     cardModuleClose();
   }
 });
+
+try {
+  const goodsList = document.querySelector(".goods__list");
+  if (!goodsList) {
+    throw "This is not a goods page!";
+  }
+} catch (err) {
+  console.warn(err);
+}
