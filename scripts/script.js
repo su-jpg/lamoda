@@ -48,6 +48,30 @@ const cardModuleClose = () => {
   enableScroll();
 };
 
+// запрос базы данных
+
+const getData = async () => {
+  const data = await fetch("db.json");
+  if (data.ok) {
+    return data.json();
+  } else {
+    throw new Error(
+      ` Данные не были получены , ошибка ${data.status} ${data.statusText} `
+    );
+  }
+};
+const getGoods = (callback) => {
+  getData()
+    .then((data) => {
+      callback(data);
+    })
+    .catch((err) => {
+      console.err(err);
+    });
+};
+getGoods((data) => {
+  console.warn(data);
+});
 subheaderCart.addEventListener("click", cartModuleOpen);
 
 cartOverlay.addEventListener("click", (event) => {
