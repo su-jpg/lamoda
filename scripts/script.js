@@ -66,7 +66,7 @@ const getGoods = (callback) => {
       callback(data);
     })
     .catch((err) => {
-      console.error(err);
+      console.log(err);
     });
 };
 // getGoods((data) => {
@@ -106,7 +106,9 @@ try {
     return li;
   };
   const renderGoodsList = (data) => {
-    console.log(date);
+    console.log(data);
+    // goodsList.textContent = "";
+    // for (let i = 0; i < data.lenght; i++) {}
   };
   getGoods(renderGoodsList);
 } catch (err) {
