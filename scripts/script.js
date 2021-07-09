@@ -1,5 +1,7 @@
 const headerCityButton = document.querySelector(".header__city-button");
 
+let hash = location.hash.substring(1);
+
 headerCityButton.textContent =
   localStorage.getItem("lomoda-location") || " Ваш город? ";
 
@@ -60,10 +62,14 @@ const getData = async () => {
     );
   }
 };
-const getGoods = (callback) => {
+const getGoods = (callback, value) => {
   getData()
     .then((data) => {
-      callback(data);
+      if (value) {
+        callback(data.filter((item) => item.category === value));
+      } else {
+        callback(data);
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -80,17 +86,13 @@ cartOverlay.addEventListener("click", (event) => {
 });
 
 try {
+  console.log(hash);
   const goodsList = document.querySelector(".goods__list");
   if (!goodsList) {
     throw "This is not a goods page!";
   }
-  const createCard = (data) => {
-    const preview = data.preview;
-    const id = data.id;
-    const brand = data.brand;
-    const name = data.name;
-    const sizes = data.sizes;
-    const cost = data.cost;
+  const createCard = ({ id, preview, cost, brand, name, sizes }) => {
+    // const { id, preview, cost, brand, name, sizes } = data;
 
     const li = document.createElement("li");
     li.classList.add("goods__item");
@@ -124,7 +126,12 @@ try {
       goodsList.append(card);
     });
   };
-  getGoods(renderGoodsList);
+  window.addEventListener("hashchange", () => {
+    hash = location.hash.substring(1);
+    getGoods(renderGoodsList, hash);
+  });
+
+  getGoods(renderGoodsList, hash);
 } catch (err) {
   console.warn(err);
 }
