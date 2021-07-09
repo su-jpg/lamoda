@@ -86,14 +86,15 @@ cartOverlay.addEventListener("click", (event) => {
 });
 
 try {
-  console.log(hash);
   const goodsList = document.querySelector(".goods__list");
   if (!goodsList) {
     throw "This is not a goods page!";
   }
-  const createCard = ({ id, preview, cost, brand, name, sizes }) => {
-    // const { id, preview, cost, brand, name, sizes } = data;
 
+  const goodsTitle = document.querySelector(".goods__title");
+  const changeTitle = () => {};
+
+  const createCard = ({ id, preview, cost, brand, name, sizes }) => {
     const li = document.createElement("li");
     li.classList.add("goods__item");
     li.innerHTML = `
